@@ -6,25 +6,17 @@ import {
   FormContainer,
 } from "../styles/StyledComponents";
 import FormInput from "../Molecules/FormInput";
-import { loginUser } from "../Services/session";
+import { createUser } from "../Services/session";
 
-const Login = ({ setCurrentPage, setUser }) => {
+const SignUp = ({ setCurrentPage, setUser }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    firstName: "",
+    lastName: "",
   });
-  const [error, setError] = useState(null);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setError(null);
-    const { data, error } = await loginUser(formData);
-    if (data) {
-      setUser(data);
-    } else {
-      setError(error);
-    }
-  }
+  const [error, setError] = useState(null);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -33,28 +25,50 @@ const Login = ({ setCurrentPage, setUser }) => {
       [name]: value,
     });
   }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError(null);
+    const { data, error } = await createUser(formData);
+    console.log("data", data, "error", error);
+    if (data) {
+      setUser(data);
+      setCurrentPage("profile");
+    } else {
+      setError(error);
+    }
+  }
+
   return (
     <FormContainer>
       <Form onSubmit={handleSubmit}>
         <FormInput
           label="Username"
-          name="username"
           value={formData.username}
           onChange={handleChange}
         />
         <FormInput
           label="Password"
-          name="password"
           value={formData.password}
           onChange={handleChange}
           type="password"
         />
-        <PrimaryButton style={{ marginTop: "16px" }}>Login</PrimaryButton>
+        <FormInput
+          label="First Name"
+          value={formData.firstName}
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Last Name"
+          value={formData.lastName}
+          onChange={handleChange}
+        />
+        <PrimaryButton style={{ marginTop: "16px" }}>Create!</PrimaryButton>
       </Form>
       {error && <p>{error}</p>}
-      <Link style={{ marginTop: "16px" }}>Or create an account</Link>
+      <Link style={{ marginTop: "16px" }}>Or login with existing user</Link>
     </FormContainer>
   );
 };
 
-export default Login;
+export default SignUp;
