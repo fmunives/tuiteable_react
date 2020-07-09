@@ -6,10 +6,15 @@ import SignUp from "./components/SignUp";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState("sign-up");
   return (
     <MainContainer>
-      <Login setUser={setUser} />
-      <SignUp setUser={setUser} />
+      {currentPage === "login" && (
+        <Login setCurrentPage={setCurrentPage} setUser={setUser} />
+      )}
+      {currentPage === "sign-up" && (
+        <SignUp setCurrentPage={setCurrentPage} setUser={setUser} />
+      )}
     </MainContainer>
   );
 }

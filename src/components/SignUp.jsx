@@ -44,22 +44,26 @@ const SignUp = ({ setCurrentPage, setUser }) => {
       <Form onSubmit={handleSubmit}>
         <FormInput
           label="Username"
+          name="username"
           value={formData.username}
           onChange={handleChange}
         />
         <FormInput
           label="Password"
+          name="password"
           value={formData.password}
           onChange={handleChange}
           type="password"
         />
         <FormInput
           label="First Name"
+          name="firstName"
           value={formData.firstName}
           onChange={handleChange}
         />
         <FormInput
           label="Last Name"
+          name="lastName"
           value={formData.lastName}
           onChange={handleChange}
         />
